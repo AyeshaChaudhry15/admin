@@ -318,9 +318,9 @@ export default function Dashboard() {
             <span>Logout</span>
           </button>
 
-          <div className="sidebar-bike">
-            <Bike size={120} />
-          </div>
+         <div className="sidebar-bike">
+  <img src="/evee1.png" alt="Sidebar Bike" width={120} height={120} />
+</div>
 
           <div className="tagline">
             <strong>Drive</strong>
@@ -653,12 +653,10 @@ export default function Dashboard() {
                         <tr key={product.name}>
 
                           <td>
-
-                            <div className="product-image">
-                              <Bike size={31} />
-                            </div>
-
-                          </td>
+  <div className="product-image">
+    <img src="/evee1.png" alt="Bike" width={31} height={31} />
+  </div>
+</td>
 
                           <td className="product-name">
                             {product.name}
