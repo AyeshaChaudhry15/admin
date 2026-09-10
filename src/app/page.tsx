@@ -151,7 +151,7 @@ export default function Dashboard() {
 
 
           <button
-            className="menu-item active"
+            className="menu-item "
             onClick={() => showMessage("Dashboard")}
           >
             <LayoutDashboard size={20} />
@@ -339,12 +339,7 @@ export default function Dashboard() {
 
           <div className="top-left">
 
-            <button
-              className="hamburger"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <Menu size={24} />
-            </button>
+          
 
             <div className="search-box">
 
@@ -383,9 +378,7 @@ export default function Dashboard() {
               >
                 <Bell size={22} />
 
-                <span className="notification-count">
-                  3
-                </span>
+                
               </button>
 
               {notificationOpen && (
@@ -393,17 +386,6 @@ export default function Dashboard() {
 
                   <h4>Notifications</h4>
 
-                  <p>
-                    You have 3 new requests.
-                  </p>
-
-                  <button
-                    onClick={() =>
-                      showMessage("Notifications marked as read")
-                    }
-                  >
-                    Mark as read
-                  </button>
 
                 </div>
               )}
