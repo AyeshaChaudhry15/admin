@@ -1,69 +1,1049 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import {
+  Menu,
+  Search,
+  Bell,
+  ChevronDown,
+  LayoutDashboard,
+  Box,
+  Tag,
+  Bike,
+  Wrench,
+  Archive,
+  Zap,
+  BookOpen,
+  FileText,
+  ClipboardList,
+  CalendarDays,
+  MessageSquare,
+  Users,
+  Settings,
+  LogOut,
+  ExternalLink,
+  Pencil,
+  Trash2,
+  ArrowUpRight,
+  Eye,
+  Grid2X2,
+  Plus,
+  X,
+} from "lucide-react";
+
+const products = [
+  {
+    name: "Ola S1 Pro",
+    type: "Scooter",
+    brand: "Ola Electric",
+    price: "PKR 849,000",
+  },
+  {
+    name: "Ather 450X",
+    type: "Scooter",
+    brand: "Ather",
+    price: "PKR 889,000",
+  },
+  {
+    name: "TVS iQube",
+    type: "Scooter",
+    brand: "TVS",
+    price: "PKR 798,000",
+  },
+  {
+    name: "Hero Vida V1",
+    type: "Scooter",
+    brand: "Hero Electric",
+    price: "PKR 839,000",
+  },
+  {
+    name: "Ampere Magnus",
+    type: "Scooter",
+    brand: "Ampere",
+    price: "PKR 549,000",
+  },
+];
+
+const inquiries = [
+  {
+    name: "Ali Raza",
+    type: "Test Ride",
+    message: "Interested in Ola S1 Pro",
+    date: "24 Aug 2026",
+    status: "New",
+  },
+  {
+    name: "Sara Khan",
+    type: "Service Booking",
+    message: "Need battery check",
+    date: "23 Aug 2026",
+    status: "In Progress",
+  },
+  {
+    name: "Bilal Ahmed",
+    type: "General Inquiry",
+    message: "Price details please",
+    date: "22 Aug 2026",
+    status: "Replied",
+  },
+  {
+    name: "Ayesha Malik",
+    type: "Test Ride",
+    message: "Test ride for Ather 450X",
+    date: "21 Aug 2026",
+    status: "New",
+  },
+  {
+    name: "Usman Tariq",
+    type: "Spare Part",
+    message: "Need charger",
+    date: "20 Aug 2026",
+    status: "Replied",
+  },
+];
+
+export default function Dashboard() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(true);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [message, setMessage] = useState("");
+
+  const showMessage = (text: string) => {
+    setMessage(text);
+
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  };
+
+  const filteredProducts = products.filter((product) =>
+    `${product.name} ${product.type} ${product.brand}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="dashboard">
+
+
+      <aside className={`sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
+
+        <div className="logo-area">
+          <div className="logo">
+            E<span>V</span>INN
+          </div>
+
+          <div className="admin-panel-text">
+            Admin Panel
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        <button
+          className="close-sidebar"
+          onClick={() => setSidebarOpen(false)}
+        >
+          <X size={22} />
+        </button>
+
+        <div className="sidebar-menu">
+
+
+          <button
+            className="menu-item active"
+            onClick={() => showMessage("Dashboard")}
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <LayoutDashboard size={20} />
+            <span>Dashboard</span>
+          </button>
+
+
+          <div>
+
+            <button
+              className="menu-item"
+              onClick={() => setProductsOpen(!productsOpen)}
+            >
+              <Box size={20} />
+
+              <span>Products</span>
+
+              <ChevronDown
+                size={16}
+                className={productsOpen ? "rotate" : ""}
+              />
+            </button>
+
+            {productsOpen && (
+              <div className="submenu">
+
+                <button
+                  onClick={() => showMessage("All Products")}
+                >
+                  All Products
+                </button>
+
+                <button
+                  onClick={() => showMessage("Add New Product")}
+                >
+                  Add New
+                </button>
+
+                <button
+                  onClick={() => showMessage("Categories")}
+                >
+                  Categories
+                </button>
+
+              </div>
+            )}
+
+          </div>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Brands")}
           >
-            Documentation
-          </a>
+            <Tag size={20} />
+            <span>Brands</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Models")}
+          >
+            <Bike size={20} />
+            <span>Models</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Spare Parts")}
+          >
+            <Wrench size={20} />
+            <span>Spare Parts</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Accessories")}
+          >
+            <Archive size={20} />
+            <span>Accessories</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Battery & Charging")}
+          >
+            <Zap size={20} />
+            <span>Battery & Charging</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Blog / News")}
+          >
+            <BookOpen size={20} />
+            <span>Blog / News</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Pages")}
+          >
+            <FileText size={20} />
+            <span>Pages</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Test Ride Requests")}
+          >
+            <ClipboardList size={20} />
+            <span>Test Ride Requests</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Service Bookings")}
+          >
+            <CalendarDays size={20} />
+            <span>Service Bookings</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Contacts")}
+          >
+            <MessageSquare size={20} />
+            <span>Contacts</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Users")}
+          >
+            <Users size={20} />
+            <span>Users</span>
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => showMessage("Website Settings")}
+          >
+            <Settings size={20} />
+            <span>Website Settings</span>
+          </button>
+
         </div>
+
+
+        <div className="sidebar-bottom">
+
+          <button
+            className="view-website"
+            onClick={() => showMessage("Opening Website")}
+          >
+            <span>View Website</span>
+            <ExternalLink size={17} />
+          </button>
+
+          <button
+            className="logout"
+            onClick={() => showMessage("Logout")}
+          >
+            <LogOut size={18} />
+            <span>Logout</span>
+          </button>
+
+          <div className="sidebar-bike">
+            <Bike size={120} />
+          </div>
+
+          <div className="tagline">
+            <strong>Drive</strong>
+            <span>Greener Tomorrow</span>
+          </div>
+
+        </div>
+
+      </aside>
+
+
+      <main className="main-content">
+
+
+        <header className="topbar">
+
+          <div className="top-left">
+
+            <button
+              className="hamburger"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <Menu size={24} />
+            </button>
+
+            <div className="search-box">
+
+              <Search size={18} />
+
+              <input
+                type="text"
+                placeholder="Search here..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+
+              {search && (
+                <button
+                  className="clear-search"
+                  onClick={() => setSearch("")}
+                >
+                  <X size={15} />
+                </button>
+              )}
+
+            </div>
+
+          </div>
+
+          <div className="top-right">
+
+
+            <div className="notification-wrapper">
+
+              <button
+                className="notification-button"
+                onClick={() =>
+                  setNotificationOpen(!notificationOpen)
+                }
+              >
+                <Bell size={22} />
+
+                <span className="notification-count">
+                  3
+                </span>
+              </button>
+
+              {notificationOpen && (
+                <div className="dropdown notification-dropdown">
+
+                  <h4>Notifications</h4>
+
+                  <p>
+                    You have 3 new requests.
+                  </p>
+
+                  <button
+                    onClick={() =>
+                      showMessage("Notifications marked as read")
+                    }
+                  >
+                    Mark as read
+                  </button>
+
+                </div>
+              )}
+
+            </div>
+
+
+            <div className="admin-wrapper">
+
+              <button
+                className="admin-button"
+                onClick={() => setAdminOpen(!adminOpen)}
+              >
+
+                <div className="avatar">
+                  A
+                </div>
+
+                <span>Admin</span>
+
+                <ChevronDown size={16} />
+
+              </button>
+
+              {adminOpen && (
+                <div className="dropdown admin-dropdown">
+
+                  <button
+                    onClick={() =>
+                      showMessage("Profile")
+                    }
+                  >
+                    Profile
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      showMessage("Settings")
+                    }
+                  >
+                    Settings
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      showMessage("Logout")
+                    }
+                  >
+                    Logout
+                  </button>
+
+                </div>
+              )}
+
+            </div>
+
+          </div>
+
+        </header>
+
+
+        <div className="page-content">
+
+
+          <div className="page-header">
+
+            <div>
+
+              <h1>Dashboard</h1>
+
+              <p>
+                Welcome to EVINN Admin Panel. Manage your
+                products, brands, models and more.
+              </p>
+
+            </div>
+
+            <button
+              className="date-button"
+              onClick={() =>
+                showMessage("Date picker")
+              }
+            >
+              <CalendarDays size={18} />
+              Mon, 25 Aug 2026
+            </button>
+
+          </div>
+
+
+          <div className="stats-grid">
+
+            <div className="stat-card">
+
+              <div className="stat-icon green">
+                <Box size={28} />
+              </div>
+
+              <div className="stat-info">
+
+                <span>Total Products</span>
+
+                <strong>248</strong>
+
+              </div>
+
+              <div className="growth">
+
+                <span>
+                  <ArrowUpRight size={14} />
+                  12%
+                </span>
+
+                <small>vs last month</small>
+
+              </div>
+
+            </div>
+
+            <div className="stat-card">
+
+              <div className="stat-icon green">
+                <Tag size={28} />
+              </div>
+
+              <div className="stat-info">
+
+                <span>Brands</span>
+
+                <strong>12</strong>
+
+              </div>
+
+              <div className="growth">
+
+                <span>
+                  <ArrowUpRight size={14} />
+                  8%
+                </span>
+
+                <small>vs last month</small>
+
+              </div>
+
+            </div>
+
+            <div className="stat-card">
+
+              <div className="stat-icon green">
+                <Bike size={28} />
+              </div>
+
+              <div className="stat-info">
+
+                <span>Models</span>
+
+                <strong>86</strong>
+
+              </div>
+
+              <div className="growth">
+
+                <span>
+                  <ArrowUpRight size={14} />
+                  15%
+                </span>
+
+                <small>vs last month</small>
+
+              </div>
+
+            </div>
+
+            <div className="stat-card">
+
+              <div className="stat-icon green">
+                <Wrench size={28} />
+              </div>
+
+              <div className="stat-info">
+
+                <span>Spare Parts</span>
+
+                <strong>320</strong>
+
+              </div>
+
+              <div className="growth">
+
+                <span>
+                  <ArrowUpRight size={14} />
+                  10%
+                </span>
+
+                <small>vs last month</small>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div className="top-panels">
+
+
+            <section className="panel products-panel">
+
+              <div className="panel-header">
+
+                <h2>Recent Products</h2>
+
+                <button
+                  onClick={() =>
+                    showMessage("View All Products")
+                  }
+                >
+                  View All
+                </button>
+
+              </div>
+
+              <div className="table-container">
+
+                <table>
+
+                  <thead>
+
+                    <tr>
+
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Brand</th>
+                      <th>Price</th>
+                      <th>Status</th>
+                      <th>Action</th>
+
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+
+                    {filteredProducts.map(
+                      (product) => (
+                        <tr key={product.name}>
+
+                          <td>
+
+                            <div className="product-image">
+                              <Bike size={31} />
+                            </div>
+
+                          </td>
+
+                          <td className="product-name">
+                            {product.name}
+                          </td>
+
+                          <td>
+                            {product.type}
+                          </td>
+
+                          <td>
+                            {product.brand}
+                          </td>
+
+                          <td>
+                            {product.price}
+                          </td>
+
+                          <td>
+
+                            <span className="status active">
+                              Active
+                            </span>
+
+                          </td>
+
+                          <td>
+
+                            <div className="action-buttons">
+
+                              <button
+                                className="edit-btn"
+                                onClick={() =>
+                                  showMessage(
+                                    `Edit ${product.name}`
+                                  )
+                                }
+                              >
+                                <Pencil size={16} />
+                              </button>
+
+                              <button
+                                className="delete-btn"
+                                onClick={() =>
+                                  showMessage(
+                                    `${product.name} deleted`
+                                  )
+                                }
+                              >
+                                <Trash2 size={16} />
+                              </button>
+
+                            </div>
+
+                          </td>
+
+                        </tr>
+                      )
+                    )}
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </section>
+
+          
+
+            <section className="panel quick-panel">
+
+              <div className="panel-header">
+
+                <h2>Quick Actions</h2>
+
+              </div>
+
+              <div className="quick-grid">
+
+                <button
+                  className="quick-card green-bg"
+                  onClick={() =>
+                    showMessage("Add New Product")
+                  }
+                >
+                  <Box />
+                  <span>Add New Product</span>
+                </button>
+
+                <button
+                  className="quick-card blue-bg"
+                  onClick={() =>
+                    showMessage("Add Brand")
+                  }
+                >
+                  <Tag />
+                  <span>Add Brand</span>
+                </button>
+
+                <button
+                  className="quick-card blue-bg"
+                  onClick={() =>
+                    showMessage("Add Model")
+                  }
+                >
+                  <Bike />
+                  <span>Add Model</span>
+                </button>
+
+                <button
+                  className="quick-card blue-bg"
+                  onClick={() =>
+                    showMessage("Add Spare Part")
+                  }
+                >
+                  <Wrench />
+                  <span>Add Spare Part</span>
+                </button>
+
+                <button
+                  className="quick-card blue-bg"
+                  onClick={() =>
+                    showMessage("Add Accessory")
+                  }
+                >
+                  <Grid2X2 />
+                  <span>Add Accessory</span>
+                </button>
+
+                <button
+                  className="quick-card blue-bg"
+                  onClick={() =>
+                    showMessage("Add Blog Post")
+                  }
+                >
+                  <FileText />
+                  <span>Add Blog Post</span>
+                </button>
+
+                <button
+                  className="quick-card orange-bg"
+                  onClick={() =>
+                    showMessage("Manage Pages")
+                  }
+                >
+                  <FileText />
+                  <span>Manage Pages</span>
+                </button>
+
+                <button
+                  className="quick-card blue-bg"
+                  onClick={() =>
+                    showMessage("Test Ride Requests")
+                  }
+                >
+                  <CalendarDays />
+                  <span>
+                    View Test Ride Requests
+                  </span>
+                </button>
+
+              </div>
+
+            </section>
+
+          </div>
+
+
+          <div className="bottom-panels">
+
+
+            <section className="panel inquiry-panel">
+
+              <div className="panel-header">
+
+                <h2>
+                  Latest Orders / Inquiries
+                </h2>
+
+                <button
+                  onClick={() =>
+                    showMessage("View All Inquiries")
+                  }
+                >
+                  View All
+                </button>
+
+              </div>
+
+              <div className="table-container">
+
+                <table>
+
+                  <thead>
+
+                    <tr>
+
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Message</th>
+                      <th>Date</th>
+                      <th>Status</th>
+
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+
+                    {inquiries.map(
+                      (item) => (
+                        <tr key={item.name}>
+
+                          <td className="product-name">
+                            {item.name}
+                          </td>
+
+                          <td>
+                            {item.type}
+                          </td>
+
+                          <td>
+                            {item.message}
+                          </td>
+
+                          <td>
+                            {item.date}
+                          </td>
+
+                          <td>
+
+                            <span
+                              className={`status ${item.status
+                                .toLowerCase()
+                                .replace(" ", "-")}`}
+                            >
+                              {item.status}
+                            </span>
+
+                          </td>
+
+                        </tr>
+                      )
+                    )}
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </section>
+
+
+            <section className="panel overview-panel">
+
+              <div className="panel-header">
+
+                <h2>Website Overview</h2>
+
+                <button className="range-button">
+                  Last 30 Days
+                  <ChevronDown size={15} />
+                </button>
+
+              </div>
+
+              <div className="overview-grid">
+
+                <div className="overview-card green-bg">
+
+                  <Users size={28} />
+
+                  <div>
+
+                    <strong>12,540</strong>
+
+                    <span>
+                      Website Visitors
+                    </span>
+
+                  </div>
+
+                  <small>
+                    <ArrowUpRight size={13} />
+                    18%
+                  </small>
+
+                </div>
+
+                <div className="overview-card blue-bg">
+
+                  <Eye size={28} />
+
+                  <div>
+
+                    <strong>3,210</strong>
+
+                    <span>
+                      Product Views
+                    </span>
+
+                  </div>
+
+                  <small>
+                    <ArrowUpRight size={13} />
+                    12%
+                  </small>
+
+                </div>
+
+                <div className="overview-card purple-bg">
+
+                  <CalendarDays size={28} />
+
+                  <div>
+
+                    <strong>420</strong>
+
+                    <span>
+                      Test Ride Requests
+                    </span>
+
+                  </div>
+
+                  <small>
+                    <ArrowUpRight size={13} />
+                    25%
+                  </small>
+
+                </div>
+
+                <div className="overview-card orange-bg">
+
+                  <MessageSquare size={28} />
+
+                  <div>
+
+                    <strong>180</strong>
+
+                    <span>
+                      Contact Messages
+                    </span>
+
+                  </div>
+
+                  <small>
+                    <ArrowUpRight size={13} />
+                    10%
+                  </small>
+
+                </div>
+
+              </div>
+
+            </section>
+
+          </div>
+
+
+          <footer className="footer">
+
+            <span>
+              © 2026 <b>EVINN.</b> All Rights Reserved.
+            </span>
+
+            <span>
+              Pakistan&apos;s Trusted Electric Mobility
+              Marketplace
+              <i></i>
+            </span>
+
+          </footer>
+
+        </div>
+
+
+        {message && (
+          <div className="toast">
+            {message}
+          </div>
+        )}
+
       </main>
+
     </div>
   );
 }
